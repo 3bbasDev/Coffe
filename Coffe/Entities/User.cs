@@ -14,6 +14,9 @@ namespace Coffe.Entities
         public string Password { get; set; }
         public Guid UserTypeId { get; set; }//fk
         public UserType UserType { get; set; }
+        public ICollection<Address> Address { get; set; }
+        public ICollection<Item> Item { get; set; }
+        public ICollection<Order> Order { get; set; }
     }
 
 }
