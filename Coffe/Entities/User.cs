@@ -16,11 +16,14 @@ namespace Coffe.Entities
         public string? Password { get; set; }
         public Guid UserTypeId { get; set; }
         public UserType? UserType { get; set; }
-        public ICollection<Item>? Items { get; set; }
-        public ICollection<Address>? Addresses { get; set; }
+        public ICollection<Address>? Address { get; set; }
+        public ICollection<Item>? Item { get; set; }
+        public ICollection<Order>? Order { get; set; }
     }
+
     public class UserConfigurations : IEntityTypeConfiguration<User>
     {
+
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
