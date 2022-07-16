@@ -22,7 +22,7 @@ namespace Coffe.Entities
         public void Configure(EntityTypeBuilder<UserType> builder)
         {
             builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
-            builder.Property(f => f.Name).HasMaxLength(100);
+            builder.Property(f => f.Name).HasMaxLength(100); 
         }
     }
 

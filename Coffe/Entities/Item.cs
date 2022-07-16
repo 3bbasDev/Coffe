@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -29,9 +29,9 @@ namespace Coffe.Entities
                 builder.Property(f => f.Name).HasMaxLength(100);
                 builder.Property(f => f.Price).IsRequired();
                 builder.Property(f => f.Count).IsRequired();
-                builder.Property(f => f.Desc).HasMaxLength(500);
-                builder.Property(f => f.Img);
-                builder.Property(f => f.MerchantID).IsRequired();
+                builder.Property(f=>f.Desc).HasMaxLength(500);
+                builder.Property(f=>f.Img);
+                builder.Property(f=>f.MerchantID).IsRequired();
 
                 builder.HasOne(f => f.Merchent)
                 .WithMany(f => f.Item)

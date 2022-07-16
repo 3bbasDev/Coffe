@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -12,13 +12,14 @@ namespace Coffe.Entities
     {
         public Guid Id { get; set; }
         public Guid CusID { get; set; }
+        public User? Customer { get; set; }
         public Guid DelId { get; set; }
+        public User? Delevery { get; set; }
         public DateTime CreationDate { get; set; }
         public Guid AddressId { get; set; }
         public decimal TotalAmount { get; set; }
         public int Status { get; set; }
-        public User? Customer { get; set; }
-        public User? Delevery { get; set; }
+        
         public Address? Address { get; set; }
 
         public ICollection<OrderItem>? Item { get; set; }
@@ -30,7 +31,7 @@ namespace Coffe.Entities
         {
             public void Configure(EntityTypeBuilder<Order> builder)
             {
-                builder.Property(f => f.Id).IsRequired();
+                builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
                 builder.Property(f => f.CusID).IsRequired();
                 builder.Property(f => f.DelId).IsRequired();
                 builder.Property(f => f.CreationDate);
@@ -41,13 +42,15 @@ namespace Coffe.Entities
 
 
                 builder.HasOne(f => f.Customer)
-                    .WithMany(f => f.Order)
-                    .HasForeignKey(f => f.CusID);
+                    .WithMany(f => f.OrderCustomer)
+                    .HasForeignKey(f => f.CusID)
+                    .OnDelete(DeleteBehavior.Restrict);
 
 
                 builder.HasOne(f => f.Delevery)
-                    .WithMany(f => f.Order)
-                    .HasForeignKey(f => f.DelId);
+                    .WithMany(f => f.OrderDelever)
+                    .HasForeignKey(f => f.DelId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 builder.HasOne(f => f.Address)
                     .WithMany(f => f.Order)

@@ -18,7 +18,8 @@ namespace Coffe.Entities
         public UserType? UserType { get; set; }
         public ICollection<Address>? Address { get; set; }
         public ICollection<Item>? Item { get; set; }
-        public ICollection<Order>? Order { get; set; }
+        public ICollection<Order>? OrderCustomer { get; set; }
+        public ICollection<Order>? OrderDelever { get; set; }
     }
 
     public class UserConfigurations : IEntityTypeConfiguration<User>
@@ -26,10 +27,10 @@ namespace Coffe.Entities
 
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
-            builder.Property(f => f.FullName).IsRequired().HasMaxLength(100);
-            builder.Property(f => f.UserName).IsRequired().HasMaxLength(50);
-            builder.Property(f => f.Password).IsRequired().HasMaxLength(50);
+            builder.Property( f => f.Id).ValueGeneratedOnAdd().IsRequired();
+            builder.Property( f => f.FullName).IsRequired().HasMaxLength(100); 
+            builder.Property( f => f.UserName).IsRequired().HasMaxLength(50);
+            builder.Property( f => f.Password).IsRequired().HasMaxLength(50);
             builder.Property(f => f.UserTypeId).IsRequired();
 
             builder.HasOne(f => f.UserType)

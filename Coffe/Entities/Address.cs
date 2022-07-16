@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace Coffe.Entities
         {
             public void Configure(EntityTypeBuilder<Address> builder)
             {
-                builder.Property(f => f.Id).IsRequired();
+                builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
                 builder.Property(f => f.Long).IsRequired();
                 builder.Property(f => f.Lat).IsRequired();
                 builder.Property(f => f.Street).HasMaxLength(100);
