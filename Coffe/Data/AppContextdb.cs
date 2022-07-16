@@ -18,12 +18,13 @@ namespace Coffe.Data
             }
         }
 
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Item> Items { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrederItem> OrederItems { get; set; }
-        public DbSet<User> Users { get; set; }
 
-        public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Address>? Addresses { get; set; }
+        public DbSet<Item>? Items { get; set; }
+        public DbSet<Order>? Orders { get; set; }
+        public DbSet<OrderItem>? OrederItems { get; set; }
+        public DbSet<User>? Users { get; set; }
+
+        public DbSet<UserType>? UserTypes { get; set; }
     }
 }
