@@ -20,26 +20,27 @@ namespace Coffe.Entities
         public User? Merchent { get; set; }
         public ICollection<OrderItem>? Orders { get; set; }
 
-        public class ItemConfigurations : IEntityTypeConfiguration<Item>
-        {
-
-            public void Configure(EntityTypeBuilder<Item> builder)
-            {
-                builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
-                builder.Property(f => f.Name).HasMaxLength(100);
-                builder.Property(f => f.Price).IsRequired();
-                builder.Property(f => f.Count).IsRequired();
-                builder.Property(f=>f.Desc).HasMaxLength(500);
-                builder.Property(f=>f.Img);
-                builder.Property(f=>f.MerchantID).IsRequired();
-
-                builder.HasOne(f => f.Merchent)
-                .WithMany(f => f.Item)
-                .HasForeignKey(f => f.MerchantID);
-            }
-        }
 
 
     }
+    public class ItemConfigurations : IEntityTypeConfiguration<Item>
+    {
+
+        public void Configure(EntityTypeBuilder<Item> builder)
+        {
+            builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
+            builder.Property(f => f.Name).HasMaxLength(100);
+            builder.Property(f => f.Price).IsRequired();
+            builder.Property(f => f.Count).IsRequired();
+            builder.Property(f => f.Desc).HasMaxLength(500);
+            builder.Property(f => f.Img);
+            builder.Property(f => f.MerchantID).IsRequired();
+
+            builder.HasOne(f => f.Merchent)
+            .WithMany(f => f.Item)
+            .HasForeignKey(f => f.MerchantID);
+        }
+    }
+
 
 }

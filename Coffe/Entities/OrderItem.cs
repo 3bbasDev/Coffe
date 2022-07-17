@@ -17,27 +17,25 @@ namespace Coffe.Entities
         public Order? Order { get; set; }
         public Item? Item { get; set; }
 
-
-        public class OrderItemConfigurations : IEntityTypeConfiguration<OrderItem>
-        {
-
-            public void Configure(EntityTypeBuilder<OrderItem> builder)
-            {
-                builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
-                builder.Property(f => f.OrderId).IsRequired();
-                builder.Property(f => f.ItemId).IsRequired();
-                builder.Property(f => f.Price).IsRequired();
-
-                builder.HasOne(f => f.Order)
-                .WithMany(f => f.Item)
-                .HasForeignKey(f => f.OrderId);
-
-                builder.HasOne(f => f.Item)
-                    .WithMany(f => f.Orders)
-                    .HasForeignKey(f => f.ItemId);
-            }
-        }
-
-
     }
+    public class OrderItemConfigurations : IEntityTypeConfiguration<OrderItem>
+    {
+
+        public void Configure(EntityTypeBuilder<OrderItem> builder)
+        {
+            builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
+            builder.Property(f => f.OrderId).IsRequired();
+            builder.Property(f => f.ItemId).IsRequired();
+            builder.Property(f => f.Price).IsRequired();
+
+            builder.HasOne(f => f.Order)
+            .WithMany(f => f.Item)
+            .HasForeignKey(f => f.OrderId);
+
+            builder.HasOne(f => f.Item)
+                .WithMany(f => f.Orders)
+                .HasForeignKey(f => f.ItemId);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Coffe.Entities;
+using System.Reflection;
 
 namespace Coffe.Data
 {
@@ -18,6 +19,11 @@ namespace Coffe.Data
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
 
         public DbSet<Address>? Addresses { get; set; }
         public DbSet<Item>? Items { get; set; }

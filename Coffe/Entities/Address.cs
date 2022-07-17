@@ -21,25 +21,26 @@ namespace Coffe.Entities
         public ICollection<Order>? Order { get; set; }
 
 
-        public class AddressConfigurasions : IEntityTypeConfiguration<Address>
-        {
-            public void Configure(EntityTypeBuilder<Address> builder)
-            {
-                builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
-                builder.Property(f => f.Long).IsRequired();
-                builder.Property(f => f.Lat).IsRequired();
-                builder.Property(f => f.Street).HasMaxLength(100);
-                builder.Property(f => f.Desc).HasMaxLength(500);
-                builder.Property(f => f.UserID).IsRequired();
-
-                builder.HasOne(f => f.User)
-                .WithMany(f => f.Address)
-                .HasForeignKey(f => f.UserID);
-
-
-            }
-        }
 
     }
+    public class AddressConfigurasions : IEntityTypeConfiguration<Address>
+    {
+        public void Configure(EntityTypeBuilder<Address> builder)
+        {
+            builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
+            builder.Property(f => f.Long).IsRequired();
+            builder.Property(f => f.Lat).IsRequired();
+            builder.Property(f => f.Street).HasMaxLength(100);
+            builder.Property(f => f.Desc).HasMaxLength(500);
+            builder.Property(f => f.UserID).IsRequired();
+
+            builder.HasOne(f => f.User)
+            .WithMany(f => f.Address)
+            .HasForeignKey(f => f.UserID);
+
+
+        }
+    }
+
 
 }
