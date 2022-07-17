@@ -1,22 +1,37 @@
 using Coffe.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+
 
 builder.Services.AddDbContext<AppContextdb>(options =>
 {
     options.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"], options =>
-        {
-            options.CommandTimeout(30);
-            options.EnableRetryOnFailure(3);
-        });
+    {
+        options.CommandTimeout(30);
+        options.EnableRetryOnFailure(3);
+    });
 });
 
-app.MapGet("/", () => "Hello World!");
+builder.Services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
+var app = builder.Build();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 app.Run();

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,17 @@ namespace Coffe.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public int? Number { get; set; }
         public ICollection<User>? Users { get; set; }
+    }
+    public class UserTypeConfigurations : IEntityTypeConfiguration<UserType>
+    {
+        public void Configure(EntityTypeBuilder<UserType> builder)
+        {
+            builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
+            builder.Property(f => f.Name).IsRequired().HasMaxLength(100);
+            builder.Property(f => f.Number).HasDefaultValue(null);
+        }
     }
 
 }
