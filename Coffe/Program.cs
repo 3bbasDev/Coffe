@@ -1,4 +1,5 @@
 using Coffe.Data;
+using Coffe.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +26,7 @@ builder.Services.AddControllers()
                     options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
-
+builder.Services.AddScoped<IAcountRepo, AcountRepo>();
 var app = builder.Build();
 
 app.UseRouting();

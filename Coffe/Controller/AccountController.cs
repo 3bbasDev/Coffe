@@ -1,4 +1,5 @@
 ﻿using Coffe.Data;
+using Coffe.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,27 +13,41 @@ namespace Coffe.Controller
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly AppContextdb _contextdb;
-        public AccountController(AppContextdb contextdb)
+        private readonly IAcountRepo _acountRepo;
+        public AccountController(IAcountRepo contextdb)
         {
-            _contextdb = contextdb;
+            _acountRepo = contextdb;
         }
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _contextdb.Users.Select(f => new
-            {
-                f.Id,
-                f.FullName
-            }).ToListAsync();
+            var users = await _acountRepo.GetAllUsers();
             return Ok(users);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] Guid Id)
         {
-            var user = await _contextdb.Users.Where(f => f.Id == Id).FirstOrDefaultAsync();
+            var user = await _acountRepo.GetUser(Id);
             if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> CheckUser([FromRoute] Guid Id)
+        {
+            var user = await _acountRepo.CheckUser(Id);
+            return Ok(user);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid Id)
+        {
+            var user = await _acountRepo.DeleteUser(Id);
+
+            if (user == false)
                 return NotFound();
             return Ok();
         }
