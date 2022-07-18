@@ -11,7 +11,7 @@ namespace Coffe.Entities
     public class UserType
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public ICollection<User>? Users { get; set; }
     }
     public class UserTypeConfigurations : IEntityTypeConfiguration<UserType>
@@ -20,6 +20,7 @@ namespace Coffe.Entities
         {
             builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(f => f.Name).IsRequired().HasMaxLength(100);
+            builder.Property(f => f.Number).HasDefaultValue(null);
         }
     }
 
