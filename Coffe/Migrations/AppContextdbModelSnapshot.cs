@@ -150,13 +150,19 @@ namespace Coffe.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("UserTypeId")
                         .HasColumnType("uuid");
@@ -176,14 +182,19 @@ namespace Coffe.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("Number")
-                        .HasColumnType("integer");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("UserTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c31cc0e0-d017-49af-846f-84e8f628cc58"),
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Coffe.Entities.Address", b =>

@@ -1,9 +1,8 @@
 using Coffe.Data;
 using Coffe.Repos;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -25,12 +24,31 @@ builder.Services.AddControllers()
                 {
                     options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
+                .AddFluentValidation(fv =>
+                {
+                   // fv.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
+                    // fv.ImplicitlyValidateChildProperties = true;
+                    fv.AutomaticValidationEnabled = true;
+                    fv.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
+                    fv.ImplicitlyValidateChildProperties = true;
                 });
+builder.Services.AddAutoMapper(typeof(Program));
+
+//builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+//builder.Services
+//    .AddFluentValidation(conf =>
+//{
+//    conf.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
+//    //conf.AutomaticValidationEnabled = false;
+//});
+
 builder.Services.AddScoped<IAcountRepo, AcountRepo>();
 var app = builder.Build();
 
 app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

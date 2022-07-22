@@ -14,7 +14,7 @@ namespace Coffe.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,9 +26,9 @@ namespace Coffe.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FullName = table.Column<string>(type: "text", nullable: true),
-                    UserName = table.Column<string>(type: "text", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: true),
+                    FullName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    UserName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     UserTypeId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -148,6 +148,11 @@ namespace Coffe.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "UserTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("c31cc0e0-d017-49af-846f-84e8f628cc58"), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",

@@ -1,4 +1,5 @@
 ﻿using Coffe.Data;
+using Coffe.Models.Users.Requests;
 using Coffe.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,19 @@ namespace Coffe.Controller
             if (user == false)
                 return NotFound();
             return Ok();
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> AddUser([FromBody] RequestCreateUserModel model)
+        {
+            //if (ModelState.IsValid)
+            //    return BadRequest();
+            var user = await _acountRepo.AddUser(model);
+
+            //if (user == Guid.Empty)
+            //    return BadRequest();
+
+            return Ok(user);
         }
     }
 }

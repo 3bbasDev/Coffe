@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Coffe.Models.Users.Requests;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Coffe.Entities
 {
-    public class User
+    public class User : BaseModel<Guid>
     {
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
         public string? FullName { get; set; }
         public string? UserName { get; set; }
         public string? Password { get; set; }

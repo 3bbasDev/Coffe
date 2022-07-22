@@ -20,7 +20,14 @@ namespace Coffe.Entities
         {
             builder.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(f => f.Name).IsRequired().HasMaxLength(100);
-            builder.Property(f => f.Number).HasDefaultValue(null);
+            //builder.Property(f => f.Number).HasDefaultValue(null);
+
+
+            builder.HasData(new UserType
+            {
+                Id = new Guid("c31cc0e0-d017-49af-846f-84e8f628cc58"),
+                Name = "Admin"
+            });
         }
     }
 
